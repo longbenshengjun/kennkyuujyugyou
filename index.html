@@ -1,153 +1,154 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>〇をならべて なんばんめ？</title>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #fdf8e3;
-    font-family: "Hiragino Maru Gothic ProN", "UD デジタル 教科書体", sans-serif;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  <meta charset="UTF-8">
+  <title>〇をならべて なんばんめ？</title>
 
-  h1 {
-    font-size: 1.8em;
-    color: #ff6666;
-    margin: 10px;
-    user-select: none;
-  }
+  <!-- iOSアプリ風全画面設定 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="icon.png">
 
-  .controls {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
+  <!-- ビューポート調整 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  button {
-    font-size: 1.4em;
-    background-color: #ffcc66;
-    border: none;
-    border-radius: 12px;
-    padding: 16px 28px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+  <style>
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Maru Gothic ProN', sans-serif;
+      background-color: #fdf8e3;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-  button:hover {
-    background-color: #ffd966;
-  }
+    h1 {
+      font-size: 2rem;
+      color: #ff6666;
+      margin-bottom: 15px;
+      user-select: none;
+    }
 
-  button:active {
-    transform: scale(1.05);
-    background-color: #ffeb99;
-  }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
 
-  .game-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 95vw;
-    max-width: 1000px;
-    flex-grow: 1;
-    margin-top: 10px;
-    padding: 10px;
-  }
+    button {
+      font-size: 1.4rem;
+      background-color: #ffcc66;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 28px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-  .label {
-    writing-mode: vertical-rl;
-    font-size: 2em;
-    color: #6699ff;
-    font-weight: bold;
-    user-select: none;
-  }
+    button:hover {
+      background-color: #ffd966;
+    }
 
-  .circle-container {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 10px;
-  }
+    button:active {
+      transform: scale(1.05);
+      background-color: #ffeb99;
+    }
 
-  .circle {
-    width: 50px;
-    height: 50px;
-    border: 3px solid black;
-    border-radius: 50%;
-    background-color: transparent;
-    display: inline-block;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
+    .game-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 95vw;
+      max-width: 1000px;
+      flex-grow: 1;
+      margin-top: 10px;
+      padding: 10px;
+    }
 
-  .circle.red {
-    background-color: #ff6666;
-    transform: scale(1.1);
-  }
-</style>
+    .label {
+      writing-mode: vertical-rl;
+      font-size: 2em;
+      color: #6699ff;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    .circle-container {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px;
+    }
+
+    .circle {
+      width: 50px;
+      height: 50px;
+      border: 3px solid black;
+      border-radius: 50%;
+      background-color: transparent;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .circle.red {
+      background-color: #ff6666;
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
 
-<h1>〇をならべて なんばんめ？</h1>
+  <h1>〇をならべて なんばんめ？</h1>
 
-<div class="controls">
-  <button id="addCircle">〇をふやす</button>
-  <button id="removeCircle">〇をへらす</button>
-</div>
+  <div class="controls">
+    <button id="addCircle">〇をふやす</button>
+    <button id="removeCircle">〇をへらす</button>
+  </div>
 
-<div class="game-area">
-  <div class="label">まえ</div>
-  <div class="circle-container" id="circleContainer"></div>
-  <div class="label">うしろ</div>
-</div>
+  <div class="game-area">
+    <div class="label">まえ</div>
+    <div class="circle-container" id="circleContainer"></div>
+    <div class="label">うしろ</div>
+  </div>
 
-<script>
-  const container = document.getElementById("circleContainer");
-  const addBtn = document.getElementById("addCircle");
-  const removeBtn = document.getElementById("removeCircle");
+  <script>
+    const container = document.getElementById("circleContainer");
+    const addBtn = document.getElementById("addCircle");
+    const removeBtn = document.getElementById("removeCircle");
 
-  function createCircle() {
-    const circle = document.createElement("div");
-    circle.classList.add("circle");
-    circle.addEventListener("click", () => {
-      circle.classList.toggle("red");
+    function createCircle() {
+      const circle = document.createElement("div");
+      circle.classList.add("circle");
+      circle.addEventListener("click", () => {
+        circle.classList.toggle("red");
+      });
+      return circle;
+    }
+
+    addBtn.addEventListener("click", () => {
+      if (container.children.length < 20) {
+        container.appendChild(createCircle());
+      }
     });
-    return circle;
-  }
 
-  addBtn.addEventListener("click", () => {
-    if (container.children.length < 20) {
-      container.appendChild(createCircle());
-    }
-  });
-
-  removeBtn.addEventListener("click", () => {
-    if (container.children.length > 0) {
-      container.removeChild(container.lastElementChild);
-    }
-  });
-
-  // iOS Safari でアドレスバーを最小化してなるべく全画面に
-  window.addEventListener("load", () => {
-    window.scrollTo(0, 1);
-  });
-</script>
+    removeBtn.addEventListener("click", () => {
+      if (container.children.length > 0) {
+        container.removeChild(container.lastElementChild);
+      }
+    });
+  </script>
 
 </body>
 </html>
-
