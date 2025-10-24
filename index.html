@@ -2,47 +2,66 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>〇をならべて なんばんめ？</title>
 <style>
-  body {
-    font-family: "UD デジタル 教科書体", "Hiragino Maru Gothic Pro", "Comic Sans MS", sans-serif;
-    background-color: #fdf8e3;
-    text-align: center;
+  html, body {
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    height: 100vh;
+    background-color: #fdf8e3;
+    font-family: "Hiragino Maru Gothic ProN", "UD デジタル 教科書体", sans-serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   h1 {
     font-size: 1.8em;
     color: #ff6666;
-    margin-bottom: 10px;
+    margin: 10px;
+    user-select: none;
   }
 
   .controls {
-    margin: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
   }
 
   button {
-    font-size: 1.2em;
+    font-size: 1.4em;
     background-color: #ffcc66;
     border: none;
     border-radius: 12px;
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 16px 28px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s ease;
   }
 
   button:hover {
     background-color: #ffd966;
   }
 
+  button:active {
+    transform: scale(1.05);
+    background-color: #ffeb99;
+  }
+
   .game-area {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 30px;
+    width: 95vw;
+    max-width: 1000px;
+    flex-grow: 1;
+    margin-top: 10px;
     padding: 10px;
   }
 
@@ -58,23 +77,27 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
   }
 
   .circle {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: 3px solid black;
     border-radius: 50%;
     background-color: transparent;
     display: inline-block;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
   }
 
   .circle.red {
     background-color: #ff6666;
+    transform: scale(1.1);
   }
 </style>
 </head>
@@ -117,6 +140,11 @@
     if (container.children.length > 0) {
       container.removeChild(container.lastElementChild);
     }
+  });
+
+  // iOS Safari でアドレスバーを最小化してなるべく全画面に
+  window.addEventListener("load", () => {
+    window.scrollTo(0, 1);
   });
 </script>
 
